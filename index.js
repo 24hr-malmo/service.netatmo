@@ -6,7 +6,6 @@ var netatmo = require("./lib/netatmo")(config);
 
 var device = null;
 var module = null;
-console.log("fetching device list");
 netatmo.getDeviceList(function(err, data){
     if (err){
         console.log("FATAL:");
