@@ -63,7 +63,7 @@ netatmo.getDeviceList(function(err, data){
     getData();
 });
 
-var doc = helper.createDoc("README.md");
+var doc = helper.createDoc({ filename : "README.md"});
 var pubsockPort = config.servicePort;
 var z = zonar.create({
     net : "24hr",
