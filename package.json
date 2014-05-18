@@ -1,0 +1,21 @@
+{
+  "name": "service.netatmo",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "zonar": "~0.5.9",
+    "zmq": "~2.7.0",
+    "service.helper": "git+https://github.com/24hr-malmo/service.helper.git",
+    "moment": "~2.6.0",
+    "oauth": "~0.9.11",
+    "user-data": "0.0.1",
+    "everyauth": "~0.4.5",
+    "request": "~2.34.0"
+  }
+}
