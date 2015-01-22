@@ -6,6 +6,8 @@ var netatmo = require("./lib/netatmo")(config);
 
 var device = null;
 var module = null;
+var latestData = "no data :/";
+
 netatmo.getDeviceList(function(err, data){
     if (err){
         console.log("FATAL:");
@@ -51,7 +53,8 @@ netatmo.getDeviceList(function(err, data){
                             ref[timestamp].values.outdoorTemperature = data.body[timestamp][0];
                         }
                     }
-                    pubsock.send(JSON.stringify(list));
+                    latestData = JSON.stringify(list);
+                    publish(latestData);
                 }
             });
         });
@@ -63,26 +66,57 @@ netatmo.getDeviceList(function(err, data){
     getData();
 });
 
-var doc = helper.createDoc({ filename : "README.md"});
-var pubsockPort = config.servicePort;
-var z = zonar.create({
-    net : "24hr",
-    name : "netatmo",
-    payload : {
-        doc : doc.getPayload(),
-        reading : {
-            type : "pub",
-            port : config.servicePort
-        }
+
+var s = helper.service();
+
+var publish;
+
+s.pub({endpointName : "pub"}, function(err, publisher){
+    if(err){
+        console.log("FATAL: could not fetch publisher");
+        console.log(err);
+        process.exit();
     }
+    publish = publisher;
 });
 
-var pubsock = zmq.socket("pub");
+s.rep({endpointName : "latest"}, function(err, reply){
+    if(err){
+        console.log("ERROR: when trying to reply");
+        console.log(err);
+        return;
+    }
 
-pubsock.bindSync("tcp://*:" + config.servicePort);
+    reply(latestData);
+});
 
-z.start(function(){
+s.doc({filename : "README.md"});
+
+s.broadcast({ net : "24hr", name : "netatmo", broadcastAddress : "172.16.135.255" }, function(){
+    s.handleInterrupt();
     console.log("started");
 });
 
-helper.handleInterrupt(z);
+//var doc = helper.createDoc({ filename : "README.md"});
+//var pubsockPort = config.servicePort;
+//var z = zonar.create({
+//    net : "24hr",
+//    name : "netatmo",
+//    payload : {
+//        doc : doc.getPayload(),
+//        reading : {
+//            type : "pub",
+//            port : config.servicePort
+//        }
+//    }
+//});
+//
+//var pubsock = zmq.socket("pub");
+//
+//pubsock.bindSync("tcp://*:" + config.servicePort);
+//
+//z.start(function(){
+//    console.log("started");
+//});
+//
+//helper.handleInterrupt(z);
