@@ -80,7 +80,7 @@ s.pub({endpointName : "pub"}, function(err, publisher){
     publish = publisher;
 });
 
-s.rep({endpointName : "latest"}, function(err, reply){
+s.rep({endpointName : "latest"}, function(err, msg, reply){
     if(err){
         console.log("ERROR: when trying to reply");
         console.log(err);
