@@ -1,6 +1,4 @@
 var helper = require("service.helper");
-var zonar = require("zonar");
-var zmq = require("zmq");
 var config = require("./config");
 var netatmo = require("./lib/netatmo")(config);
 
@@ -97,26 +95,3 @@ s.broadcast({ net : "24hr", name : "netatmo", broadcastAddress : "172.16.135.255
     console.log("started");
 });
 
-//var doc = helper.createDoc({ filename : "README.md"});
-//var pubsockPort = config.servicePort;
-//var z = zonar.create({
-//    net : "24hr",
-//    name : "netatmo",
-//    payload : {
-//        doc : doc.getPayload(),
-//        reading : {
-//            type : "pub",
-//            port : config.servicePort
-//        }
-//    }
-//});
-//
-//var pubsock = zmq.socket("pub");
-//
-//pubsock.bindSync("tcp://*:" + config.servicePort);
-//
-//z.start(function(){
-//    console.log("started");
-//});
-//
-//helper.handleInterrupt(z);

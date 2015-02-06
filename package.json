@@ -9,8 +9,6 @@
   "author": "",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "zonar": "~0.5.9",
-    "zmq": "~2.7.0",
     "service.helper": "git+https://github.com/24hr-malmo/service.helper.git",
     "moment": "~2.6.0",
     "oauth": "~0.9.11",
