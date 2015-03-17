@@ -9,6 +9,7 @@ var latestData = "no data :/";
 netatmo.getDeviceList(function(err, data){
     if (err){
         console.log("FATAL:");
+        console.log(data);
         console.log(err);
         process.exit();
     }
@@ -85,6 +86,8 @@ s.rep({endpointName : "latest"}, function(err, msg, reply){
         return;
     }
 
+    console.log("Sending latest");
+    console.log(latestData);
     reply(latestData);
 });
 
